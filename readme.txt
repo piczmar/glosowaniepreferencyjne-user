@@ -27,7 +27,10 @@ http://piczmar.github.io/glosowaniepreferencyjne-user
 W repozytorium jest branch gh-pages gdzie musza sie znajdowac aktualne zrodla stron.
 Budowanie i update stron na serwerze odbywa sie nastepujaco:
 1. grunt build
-2. git push origin :gh-pages
-3. git subtree push --prefix dist origin gh-pages
+2. git add dist
+3. git commit -m 'release dist'
+4. git push origin master
+5. git push origin :gh-pages
+6. git subtree push --prefix dist origin gh-pages
 
 Wiecej informacji o buildach: http://yeoman.io/learning/deployment.html
