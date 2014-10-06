@@ -32,6 +32,7 @@ app.controller('VoteCtrl', function ($scope, $routeParams, $location, VoteFactor
 	    $scope.isSaving = false;
 	};
 
+
 	$scope.init();
 
 	var tmpList = [];
