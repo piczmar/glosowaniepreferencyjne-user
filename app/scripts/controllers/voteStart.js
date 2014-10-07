@@ -4,7 +4,7 @@ var app = angular.module('clientUserApp');
 
 'use strict';
 
-app.controller( "VoteStartCtrl", function( $scope, $routeParams, $location, vote, voteLibrary ) {
+app.controller( "VoteStartCtrl", function( $scope, $routeParams, $location, vote, voteLibrary, voteService ) {
   
   	$scope.vote = vote.data;
 
@@ -72,6 +72,7 @@ app.controller( "VoteStartCtrl", function( $scope, $routeParams, $location, vote
 		var promise = voteLibrary.saveVoting($scope.vote);
 		promise.then(
 			function(data){
+				voteService.setVote(data.data);
 				console.log("SAVED VOTE: " + JSON.stringify(data));
 				$location.path('/thankyou/');
 				$scope.voteDef = {};

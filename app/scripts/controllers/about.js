@@ -8,10 +8,7 @@
  * Controller of the clientUserApp
  */
 angular.module('clientUserApp')
-  .controller('AboutCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
+  .controller('AboutCtrl', function ($scope, SERVER_URL, PROFILE) {
+    $scope.SERVER_URL = SERVER_URL;
+    $scope.PROFILE = PROFILE;
   });

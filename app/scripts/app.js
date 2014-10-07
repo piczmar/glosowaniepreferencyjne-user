@@ -10,6 +10,7 @@
  */
  var app = angular
  .module('clientUserApp', [
+  'config',
   'ngResource',
   'ngRoute',
   'ui.sortable'
@@ -40,85 +41,13 @@ app.config(function ($routeProvider,  $locationProvider ) {
     }
  
   });
-  $routeProvider.when('/thankyou',{templateUrl: 'views/thankYou.html', controller: 'VoteCtrl'});
+  $routeProvider.when('/thankyou',{templateUrl: 'views/thankYou.html', controller: 'ThankYouCtrl'});
   $routeProvider.when('/404',{templateUrl: 'views/404.html'});
   $routeProvider.otherwise({redirectTo: '/' });
 
   // $locationProvider.html5Mode(true).hashPrefix('!');
 });
-//app.value('BASE_URL','http://piczmar.aplikacje.mydevil.net');
- app.value('BASE_URL', 'http://localhost:7000');
 
-
-app.factory('voteLibrary', function($http, BASE_URL) {
-  var sdo = {
-    createNewVoting: function(voteDefId) {
-
-      var promise = $http.get(
-        BASE_URL + '/api/votes/VoteDefs/'+voteDefId,
-          {headers: {'Content-Type': 'application/json'}}
-         )
-      .success(function(data, status, headers, config) {
-        console.log("DATA : " + JSON.stringify(data));
-        return data;
-      })
-      .error(function(data, status, headers, config) {
-        console.log('Error when creating voting.. ');
-
-        return data;
-      });
-      return promise;
-    },
-
-    saveVoting: function(vote) {
-
-      var promise;
-      console.log('** updating vote ' + vote._id);
-      if(vote._id){
-        promise = $http.put(
-          BASE_URL + '/api/votes',
-          vote,
-          {headers: {'Content-Type': 'application/json'}}
-        );
-      }else{
-        promise = $http.post(
-          BASE_URL + '/api/votes',
-          vote,
-          {headers: {'Content-Type': 'application/json'}}
-        );
-      }
-      promise.success(function(data, status, headers, config) {
-        console.log("DATA : " + JSON.stringify(data));
-        return data;
-      });
-      promise.error(function(data, status, headers, config) {
-        console.log('Error when creating voting.. ');
-
-        return data;
-      });
-      return promise;
-  }, 
-
-    getVoting: function(id) {
-
-      var promise = $http.get(
-        BASE_URL + '/api/votes/'+id,
-          {headers: {'Content-Type': 'application/json'}}
-         )
-      .success(function(data, status, headers, config) {
-        console.log("DATA : " + JSON.stringify(data));
-        return data;
-      })
-      .error(function(data, status, headers, config) {
-        console.log('Error when creating voting.. ');
-
-        return data;
-      });
-      return promise;
-    }
-  };
-  return sdo;
-});
 
 app.factory('$exceptionHandler', function () {
     return function (exception, cause) {

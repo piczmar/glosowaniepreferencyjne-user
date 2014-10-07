@@ -3,7 +3,7 @@
 describe('Controller: AboutCtrl', function () {
 
   // load the controller's module
-  beforeEach(module('clientUserApp'));
+  beforeEach(module('glosowaniepreferencyjneUserApp'));
 
   var AboutCtrl,
     scope;

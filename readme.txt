@@ -1,36 +1,31 @@
-To jest aplikacja kliencka dla Usera (Glosujacego), stworzona z uzyciem Yeoman.
+When you push a yeoman project to git, it only pushes your scripts and configuration files. It does not push libraries and dependencies.
 
-Aby wystartowac projekt musisz miec zainstalowany:
- * Nodejs & npm (http://nodejs.org/)
- * Yeaoman (http://yeoman.io/)
-	npm install -g yo
+So when you git clone a yeoman project you won’t be having all the files to run the project.
+If you run grunt command. You will get following output:
 
-Uruchom projekt wykonujac po kolei polecenia:
+grunt-cli: The grunt command line interface. (v0.1.13)
+
+Fatal error: Unable to find local grunt.
+
+If you're seeing this message, either a Gruntfile wasn't found or grunt
+hasn't been installed locally to your project. For more information about
+installing and configuring grunt, please see the Getting Started guide:
+
+http://gruntjs.com/getting-started
+
+Just run
 
 npm install
 bower update
-grunt serve
 
-nastepnie otworz w przegladarce:
-http://localhost:9000/#/vote/asdsfasddasfsf 
+Now if you run grunt serve. Hopefully it will run properly.
+If you get this error:
 
-Ten URL sluzy do uzupelnienia glowania preferencyjnego. Taki link powinien wygenerowac admin
-i wyslac glosujacemu mailem.
+Warning: watch ENOSPC
+warning: Recursive process.nextTick detected. This will break in the next version of node. Please use setImmediate for recursive deferral.
 
-Narazie nie ma zapisu do Mongo DB, dane sa przechowane w przegladarce i po refreshu stronki wszystko wraca do stanu wyjsciowego.
+Use following command to fix it.
 
-Instalacja na serwerze
-------------------------
-Strony sa instalowane na github.io
-http://piczmar.github.io/glosowaniepreferencyjne-user
+echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 
-W repozytorium jest branch gh-pages gdzie musza sie znajdowac aktualne zrodla stron.
-Budowanie i update stron na serwerze odbywa sie nastepujaco:
-1. grunt build
-2. git add dist
-3. git commit -m 'release dist'
-4. git push origin master
-5. git push origin :gh-pages
-6. git subtree push --prefix dist origin gh-pages
-
-Wiecej informacji o buildach: http://yeoman.io/learning/deployment.html
+(Ref: http://stackoverflow.com/questions/16748737/grunt-watch-error-waiting-fatal-error-watch-enospc)

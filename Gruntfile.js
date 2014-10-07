@@ -1,4 +1,4 @@
-// Generated on 2014-07-01 using generator-angular 0.9.1
+// Generated on 2014-10-06 using generator-angular 0.9.8
 'use strict';
 
 // # Globbing
@@ -26,6 +26,25 @@ module.exports = function (grunt) {
 
     // Project settings
     yeoman: appConfig,
+
+    ngconstant: {
+      options: {
+        name: 'config',
+        dest: 'app/scripts/config.js'
+      },
+      development: {
+        constants: {
+          PROFILE: "DEVELOPMENT",
+           SERVER_URL: 'http://localhost:7000'
+        }
+      },
+      production: {
+        constants: {
+          PROFILE: "PRODUCTION",
+          SERVER_URL: 'http://glosprefuser.aplikacje.mydevil.net'
+        }
+      },
+    },
 
     // Watches files for changes and runs tasks based on the changed files
     watch: {
@@ -66,10 +85,10 @@ module.exports = function (grunt) {
     // The actual grunt server settings
     connect: {
       options: {
-        port: 9000,
+        port: 7001,
         // Change this to '0.0.0.0' to access the server from outside.
         hostname: 'localhost',
-        livereload: 35729
+        livereload: 45729
       },
       livereload: {
         options: {
@@ -88,7 +107,7 @@ module.exports = function (grunt) {
       },
       test: {
         options: {
-          port: 9001,
+          port: 8001,
           middleware: function (connect) {
             return [
               connect.static('.tmp'),
@@ -162,12 +181,9 @@ module.exports = function (grunt) {
 
     // Automatically inject Bower components into the app
     wiredep: {
-      options: {
-        cwd: '<%= yeoman.app %>'
-      },
       app: {
         src: ['<%= yeoman.app %>/index.html'],
-        ignorePath:  /..\//
+        ignorePath:  /\.\.\//
       }
     },
 
@@ -277,15 +293,14 @@ module.exports = function (grunt) {
       }
     },
 
-    // ngmin tries to make the code safe for minification automatically by
-    // using the Angular long form for dependency injection. It doesn't work on
-    // things like resolve or inject so those have to be done manually.
-    ngmin: {
+    // ng-annotate tries to make the code safe for minification automatically
+    // by using the Angular long form for dependency injection.
+    ngAnnotate: {
       dist: {
         files: [{
           expand: true,
           cwd: '.tmp/concat/scripts',
-          src: '*.js',
+          src: ['*.js', '!oldieshim.js'],
           dest: '.tmp/concat/scripts'
         }]
       }
@@ -366,6 +381,7 @@ module.exports = function (grunt) {
 
     grunt.task.run([
       'clean:server',
+      'ngconstant:development',
       'wiredep',
       'concurrent:server',
       'autoprefixer',
@@ -389,12 +405,13 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build', [
     'clean:dist',
+    'ngconstant:production',
     'wiredep',
     'useminPrepare',
     'concurrent:dist',
     'autoprefixer',
     'concat',
-    'ngmin',
+    'ngAnnotate',
     'copy:dist',
     'cdnify',
     'cssmin',
