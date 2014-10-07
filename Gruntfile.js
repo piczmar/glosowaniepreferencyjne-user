@@ -35,13 +35,15 @@ module.exports = function (grunt) {
       development: {
         constants: {
           PROFILE: "DEVELOPMENT",
-           SERVER_URL: 'http://localhost:7000'
+           SERVER_URL: 'http://localhost:7000',
+           USER_WEB_URL: 'http://localhost:7001'
         }
       },
       production: {
         constants: {
           PROFILE: "PRODUCTION",
-          SERVER_URL: 'http://glosprefuser.aplikacje.mydevil.net'
+          SERVER_URL: 'http://glosprefuser.aplikacje.mydevil.net',
+          USER_WEB_URL: 'http://piczmar.github.io/glosowaniepreferencyjne-user'
         }
       },
     },
